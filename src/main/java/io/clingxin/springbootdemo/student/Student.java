@@ -2,12 +2,13 @@
  * @Author: clingxin
  * @Date: 2021-05-20 19:02:26
  * @LastEditors: clingxin
- * @LastEditTime: 2021-05-21 10:03:35
+ * @LastEditTime: 2021-05-21 10:12:28
  * @FilePath: /springboot-demo/src/main/java/io/clingxin/springbootdemo/student/Student.java
  */
 package io.clingxin.springbootdemo.student;
 
 import java.time.LocalDate;
+import java.time.Period;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,16 +16,16 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table
 public class Student {
-    public Student(Long id, String name, String email, LocalDate dob, Integer age) {
+    public Student(Long id, String name, String email, LocalDate dob) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.dob = dob;
-        this.age = age;
     }
     @Override
     public String toString() {
@@ -55,16 +56,15 @@ public class Student {
         this.dob = dob;
     }
     public Integer getAge() {
-        return age;
+        return Period.between(this.dob, LocalDate.now()).getYears();
     }
     public void setAge(Integer age) {
         this.age = age;
     }
-    public Student(String name, String email, LocalDate dob, Integer age) {
+    public Student(String name, String email, LocalDate dob) {
         this.name = name;
         this.email = email;
         this.dob = dob;
-        this.age = age;
     }
     public Student() {
     }
@@ -75,5 +75,6 @@ public class Student {
     private String name;
     private String email;
     private LocalDate dob;
+    @Transient
     private Integer age;
 }
