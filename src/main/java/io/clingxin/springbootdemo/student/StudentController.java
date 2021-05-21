@@ -2,7 +2,7 @@
  * @Author: clingxin
  * @Date: 2021-05-20 19:23:31
  * @LastEditors: clingxin
- * @LastEditTime: 2021-05-20 20:11:05
+ * @LastEditTime: 2021-05-21 17:19:43
  * @FilePath: /springboot-demo/src/main/java/io/clingxin/springbootdemo/student/StudentController.java
  */
 package io.clingxin.springbootdemo.student;
@@ -10,8 +10,14 @@ package io.clingxin.springbootdemo.student;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -30,4 +36,19 @@ public class StudentController {
 	public List<Student> getStudents() {
 		return studentService.getStudents();
 	}
+
+    @PostMapping
+    public void registerNewStudent(@RequestBody Student student) {
+        studentService.addNewStudent(student);
+    }
+
+    @DeleteMapping(path = "{studentId}")
+    public void deleteStudent(@PathVariable("studentId") Long studentId){
+        studentService.deleteStudent(studentId);
+    }
+
+    @PutMapping(path = "{studentId}")
+    public void updateStudent(@PathVariable("studentId") Long studentId, @RequestParam(required = false) String name, @RequestParam(required = false) String email) {
+        studentService.updateStudent(studentId, name, email);
+    }
 }
