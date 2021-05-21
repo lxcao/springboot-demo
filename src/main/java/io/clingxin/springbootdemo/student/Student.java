@@ -2,13 +2,22 @@
  * @Author: clingxin
  * @Date: 2021-05-20 19:02:26
  * @LastEditors: clingxin
- * @LastEditTime: 2021-05-20 19:09:11
+ * @LastEditTime: 2021-05-21 10:03:35
  * @FilePath: /springboot-demo/src/main/java/io/clingxin/springbootdemo/student/Student.java
  */
 package io.clingxin.springbootdemo.student;
 
 import java.time.LocalDate;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+
+@Entity
+@Table
 public class Student {
     public Student(Long id, String name, String email, LocalDate dob, Integer age) {
         this.id = id;
@@ -59,6 +68,9 @@ public class Student {
     }
     public Student() {
     }
+    @Id
+    @SequenceGenerator(name = "student_sequence", sequenceName = "student_sequence", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "student_sequence")
     private Long id;
     private String name;
     private String email;
